@@ -1,0 +1,164 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+:host {
+  display: block;
+  width: 90vw;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+mat-dialog-content {
+  max-height: 80vh;
+  padding: 20px;
+}
+
+.import-container {
+  height: 600px;
+  padding: 20px;
+  min-width: 800px;
+  overflow-y: scroll;
+  
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  .mat-stepper-horizontal {
+    background-color: transparent;
+  }
+
+  ::ng-deep {
+    .mat-horizontal-stepper-header-container {
+      padding: 0 24px;
+    }
+
+    .mat-horizontal-content-container {
+      padding: 24px;
+    }
+
+    .mat-step-label {
+      font-size: 16px;
+      white-space: nowrap;
+    }
+
+    .mat-step-header {
+      padding: 16px;
+    }
+  }
+
+  .step-content {
+    padding: 16px;
+    min-height: 400px;
+
+    .mat-form-field {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+
+  .file-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    background-color: #fafafa;
+
+    .file-name {
+      color: #666;
+    }
+  }
+
+  .step-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: auto;
+    padding: 8px 0;
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 0 24px 24px;
+
+  button {
+    min-width: 120px;
+  }
+}
+
+.mapping-container {
+  margin: $spacing-lg 0;
+
+  h3 {
+    margin-bottom: $spacing-lg;
+    color: $text-primary;
+  }
+
+  .mapping-fields {
+    @include responsive-grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+}
+
+.preview-container {
+  @include table-container;
+  margin: $spacing-lg 0;
+  overflow-x: auto;
+
+  .preview-info {
+    margin-bottom: $spacing-md;
+    color: $text-secondary;
+    font-style: italic;
+  }
+
+  table {
+    width: 100%;
+    
+    .mat-column-amount {
+      text-align: right;
+    }
+
+    .expense {
+      color: $warn;
+    }
+
+    .income {
+      color: $success;
+    }
+  }
+}
+
+.confirmation {
+  margin: $spacing-lg 0;
+  text-align: center;
+
+  mat-progress-bar {
+    margin: $spacing-lg 0;
+    width: 100%;
+  }
+
+  .import-progress {
+    color: $text-secondary;
+    margin: $spacing-sm 0;
+  }
+}
+
+mat-dialog-actions {
+  padding: 8px 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}

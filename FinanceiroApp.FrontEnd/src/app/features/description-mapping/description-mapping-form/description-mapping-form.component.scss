@@ -1,0 +1,35 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.form-container {
+  @include form-container;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.container {
+  @include form-container;
+
+  .header {
+    @include page-header;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    .form-field {
+      width: 100%;
+    }
+
+    .actions {
+      display: flex;
+      gap: $spacing-md;
+      justify-content: flex-end;
+      margin-top: $spacing-lg;
+    }
+  }
+}

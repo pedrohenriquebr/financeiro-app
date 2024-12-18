@@ -1,0 +1,108 @@
+<div class="grid-container">
+  <div class="grid-header">
+    <mat-form-field class="filter-field">
+      <mat-label>Filtro</mat-label>
+      <input matInput [(ngModel)]="filterExpression" placeholder="Ex: item.amount > 1000 && item.type === 'EXPENSE'">
+      <button mat-icon-button matSuffix (click)="applyFilter()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-stroked-button color="warn" (click)="clearFilter()">
+      <mat-icon>clear</mat-icon>
+      Limpar Filtro
+    </button>
+
+    <mat-form-field class="column-select">
+      <mat-label>Colunas Visíveis</mat-label>
+      <mat-select multiple [(value)]="visibleColumns">
+        <mat-option *ngFor="let column of hideableColumns" 
+                   [value]="column.name"
+                   (click)="toggleColumnVisibility(column)">
+          {{column.displayName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" matSort class="transaction-table">
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                     [checked]="selection.hasValue() && isAllSelected()"
+                     [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                     (change)="$event ? selection.toggle(row) : null"
+                     [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrição </th>
+      <td mat-cell *matCellDef="let transaction"> {{transaction.description}} </td>
+    </ng-container>
+
+    <!-- Amount Column -->
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor </th>
+      <td mat-cell *matCellDef="let transaction" [class.expense]="transaction.type === 'EXPENSE'">
+        {{transaction.amount | currency:'BRL'}}
+      </td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
+      <td mat-cell *matCellDef="let transaction"> {{transaction.date | date:'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+      <td mat-cell *matCellDef="let transaction">
+        <span [class.expense]="transaction.type === 'EXPENSE'" [class.income]="transaction.type === 'INCOME'">
+          {{transaction.type === 'EXPENSE' ? 'Despesa' : 'Receita'}}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Category Column -->
+    <ng-container matColumnDef="categoryName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </th>
+      <td mat-cell *matCellDef="let transaction"> {{transaction.categoryName || 'Não categorizado'}} </td>
+    </ng-container>
+
+    <!-- Bank Account Column -->
+    <ng-container matColumnDef="bankAccountName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Conta </th>
+      <td mat-cell *matCellDef="let transaction"> {{transaction.bankAccountName}} </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td mat-cell *matCellDef="let transaction">
+        <button mat-icon-button color="primary" (click)="editTransaction(transaction)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteTransaction(transaction)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: visibleColumns"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"
+                 showFirstLastButtons
+                 aria-label="Selecione a página">
+  </mat-paginator>
+</div>

@@ -1,0 +1,148 @@
+@import './variables';
+
+// Mixin para container de listagem
+@mixin list-container {
+  padding: $container-padding;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+
+    h1, h2 {
+      margin: 0;
+    }
+  }
+}
+
+// Mixin para container de formulário
+@mixin form-container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+// Mixin para header de página
+@mixin page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+  
+  h1, h2 {
+    margin: 0;
+  }
+}
+
+// Mixin para container de tabela
+@mixin table-container {
+  width: 100%;
+  overflow-x: auto;
+  
+  table {
+    width: 100%;
+    min-width: 800px;
+  }
+}
+
+// Mixin para overlay de carregamento
+@mixin loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+// Mixin para grid responsivo
+@mixin responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-md;
+  
+  @include responsive(tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include responsive(mobile) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Mixin para responsividade
+@mixin responsive($breakpoint) {
+  @if $breakpoint == tablet {
+    @media (max-width: 768px) { @content; }
+  } @else if $breakpoint == mobile {
+    @media (max-width: 576px) { @content; }
+  }
+}
+
+@mixin filter-field {
+  width: 100%;
+  max-width: 300px;
+}
+
+@mixin card {
+  background: white;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  box-shadow: $shadow-sm;
+  margin-bottom: $spacing-md;
+}
+
+@mixin grid {
+  display: grid;
+  gap: $spacing-md;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin responsive-padding {
+  padding: $spacing-md;
+  
+  @media (min-width: $breakpoint-md) {
+    padding: $spacing-lg;
+  }
+}
+
+@mixin scrollable {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+}

@@ -1,0 +1,114 @@
+// Database Schema for FinanceiroApp
+
+Table transactions {
+  id int [pk, increment]
+  description varchar
+  value decimal
+  transaction_date_time datetime
+  registration_date_time datetime
+  import_date_time datetime [null]
+  is_transfer boolean
+  destination_bank_account_id int [ref: > bank_accounts.id, null]
+  is_recurring boolean
+  recurrence_type int [null]
+  recurrence_frequency int [null]
+  recurrence_end_date datetime [null]
+  parent_transaction_id int [ref: > transactions.id, null]
+  category_id int [ref: > categories.id, null]
+  bank_account_id int [ref: > bank_accounts.id, null]
+
+  indexes {
+    transaction_date_time
+    registration_date_time
+    category_id
+    bank_account_id
+    parent_transaction_id
+  }
+}
+
+Table scheduled_transactions {
+  id int [pk, increment]
+  description varchar
+  amount decimal
+  next_due_date datetime
+  is_recurring boolean
+  recurrence_type int
+  recurrence_frequency int
+  recurrence_end_date datetime
+  category_id int [ref: > categories.id]
+  bank_account_id int [ref: > bank_accounts.id]
+  is_processed boolean
+  last_processed_date datetime
+
+  indexes {
+    next_due_date
+    category_id
+    bank_account_id
+  }
+}
+
+Table financial_goals {
+  id int [pk, increment]
+  name varchar
+  target_amount decimal
+  current_amount decimal
+  target_date datetime
+  created_at datetime
+  updated_at datetime [null]
+
+  indexes {
+    target_date
+  }
+}
+
+Table categories {
+  id int [pk, increment]
+  name varchar
+  type int
+  nature int
+  planned_amount decimal
+  created_at datetime
+  updated_at datetime [null]
+
+  indexes {
+    type
+    nature
+  }
+}
+
+Table banks {
+  id int [pk, increment]
+  name varchar
+  code varchar
+
+  indexes {
+    code
+  }
+}
+
+Table bank_accounts {
+  id int [pk, increment]
+  bank_id int [ref: > banks.id]
+  number varchar
+  type varchar
+  name varchar
+  balance decimal
+  agency varchar
+
+  indexes {
+    bank_id
+    number
+    agency
+  }
+}
+
+Table description_mappings {
+  id int [pk, increment]
+  pattern varchar
+  category_id int [ref: > categories.id]
+
+  indexes {
+    category_id
+    pattern
+  }
+}

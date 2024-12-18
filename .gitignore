@@ -110,3 +110,9 @@ _ReSharper*/
 
 # Microsoft Fakes
 FakesAssemblies/
+credentials.json
+wwwroot/
+*.
+appsettings.Development.json
+credentials.json
+environment.development.ts

@@ -1,0 +1,61 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.container {
+  @include list-container;
+
+  .header {
+    @include page-header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+
+    .actions {
+      display: flex;
+      gap: $spacing-sm;
+    }
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  .filter-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .mat-elevation-z8 {
+    position: relative;
+    
+    mat-progress-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  table {
+    width: 100%;
+
+    .mat-cell {
+      padding: 8px 16px;
+    }
+
+    .mat-header-cell {
+      font-weight: bold;
+      color: rgba(0, 0, 0, 0.87);
+    }
+
+    .mat-column-actions {
+      width: 120px;
+      text-align: center;
+    }
+  }
+
+  .mat-column-code {
+    width: 120px;
+  }
+}

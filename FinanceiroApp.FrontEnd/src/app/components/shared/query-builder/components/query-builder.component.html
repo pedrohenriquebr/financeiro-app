@@ -1,0 +1,244 @@
+<div class="query-builder">
+  <div class="query-group">
+    <div class="group-header">
+      <button mat-button (click)="toggleGroupType(rootGroup)">
+        {{ rootGroup.type }}
+      </button>
+      <button mat-icon-button (click)="addCondition(rootGroup)">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-icon-button (click)="addGroup(rootGroup)">
+        <mat-icon>create_new_folder</mat-icon>
+      </button>
+    </div>
+
+    <div class="group-content">
+      <ng-container *ngFor="let item of rootGroup.conditions; let i = index">
+        <!-- Condition -->
+        <div *ngIf="!isQueryGroup(item)" class="condition">
+          <mat-form-field appearance="outline">
+            <mat-label>Field</mat-label>
+            <mat-select [(ngModel)]="item.field">
+              <mat-option *ngFor="let field of config.fields" [value]="field.field">
+                {{ field.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Operator</mat-label>
+            <mat-select [(ngModel)]="item.operator">
+              <mat-option *ngFor="let op of getOperatorsForField(item.field)" [value]="op">
+                {{ op }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Value</mat-label>
+            <mat-select *ngIf="isSelect(item)" [(ngModel)]="item.value">
+              <mat-option *ngFor="let option of getOptionsForField(item.field)" [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+            <input matInput *ngIf="!isSelect(item)" [(ngModel)]="item.value">
+          </mat-form-field>
+
+          <button mat-icon-button color="warn" (click)="removeCondition(rootGroup, i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+        <!-- Nested Group -->
+        <div *ngIf="isQueryGroup(item)" class="nested-group">
+          <div class="group-header">
+            <button mat-button (click)="toggleGroupType(item)">
+              {{ item.type }}
+            </button>
+            <button mat-icon-button (click)="addCondition(item)">
+              <mat-icon>add</mat-icon>
+            </button>
+            <button mat-icon-button (click)="addGroup(item)">
+              <mat-icon>create_new_folder</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="removeGroup(rootGroup, i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <div class="group-content">
+            <ng-container *ngFor="let subItem of item.conditions let j = index">
+              <!-- Nested Condition -->
+              <div *ngIf="!isQueryGroup(subItem)" class="condition">
+                <mat-form-field appearance="outline">
+                  <mat-label>Field</mat-label>
+                  <mat-select [(ngModel)]="subItem.field">
+                    <mat-option *ngFor="let field of config.fields" [value]="field.field">
+                      {{ field.label }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Operator</mat-label>
+                  <mat-select [(ngModel)]="subItem.operator">
+                    <mat-option *ngFor="let op of getOperatorsForField(subItem.field)" [value]="op">
+                      {{ op }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Value</mat-label>
+                  <mat-select *ngIf="isSelect(subItem)" [(ngModel)]="subItem.value">
+                    <mat-option *ngFor="let option of getOptionsForField(subItem.field)" [value]="option.value">
+                      {{ option.label }}
+                    </mat-option>
+                  </mat-select>
+                  <input matInput *ngIf="!isSelect(subItem)" [(ngModel)]="subItem.value">
+                </mat-form-field>
+      
+
+                <button mat-icon-button color="warn" (click)="removeCondition(item, j)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+
+              <!-- Nested Nested Group -->
+              <div *ngIf="isQueryGroup(subItem)" class="nested-group">
+                <div class="group-header">
+                  <button mat-button (click)="toggleGroupType(subItem)">
+                    {{ subItem.type }}
+                  </button>
+                  <button mat-icon-button (click)="addCondition(subItem)">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="addGroup(subItem)">
+                    <mat-icon>create_new_folder</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="removeGroup(item, j)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #groupTemplate let-group>
+  <ng-container *ngFor="let item of group.conditions; let i = index">
+    <!-- Condition -->
+    <div *ngIf="!isQueryGroup(item)" class="condition">
+      <mat-form-field appearance="outline">
+        <mat-label>Field</mat-label>
+        <mat-select [(ngModel)]="item.field">
+          <mat-option *ngFor="let field of config.fields" [value]="field.field">
+            {{ field.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Operator</mat-label>
+        <mat-select [(ngModel)]="item.operator">
+          <mat-option *ngFor="let op of getOperatorsForField(item.field)" [value]="op">
+            {{ op }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Value</mat-label>
+        <mat-select *ngIf="isSelect(item)" [(ngModel)]="item.value">
+          <mat-option *ngFor="let option of getOptionsForField(item.field)" [value]="option.value">
+            {{ option.label }}
+          </mat-option>
+        </mat-select>
+        <input matInput *ngIf="!isSelect(item)" [(ngModel)]="item.value">
+      </mat-form-field>
+
+      <button mat-icon-button color="warn" (click)="removeCondition(group, i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <!-- Nested Group -->
+    <div *ngIf="isQueryGroup(item)" class="nested-group">
+      <div class="group-header">
+        <button mat-button (click)="toggleGroupType(item)">
+          {{ item.type }}
+        </button>
+        <button mat-icon-button (click)="addCondition(item)">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button (click)="addGroup(item)">
+          <mat-icon>create_new_folder</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="removeGroup(group, i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
+      <div class="group-content">
+        <ng-container *ngFor="let subItem of item.conditions let j = index">
+          <!-- Nested Condition -->
+          <div *ngIf="!isQueryGroup(subItem)" class="condition">
+            <mat-form-field appearance="outline">
+              <mat-label>Field</mat-label>
+              <mat-select [(ngModel)]="subItem.field">
+                <mat-option *ngFor="let field of config.fields" [value]="field.field">
+                  {{ field.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Operator</mat-label>
+              <mat-select [(ngModel)]="subItem.operator">
+                <mat-option *ngFor="let op of getOperatorsForField(subItem.field)" [value]="op">
+                  {{ op }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Value</mat-label>
+              <mat-select *ngIf="isSelect(subItem)" [(ngModel)]="subItem.value">
+                <mat-option *ngFor="let option of getOptionsForField(subItem.field)" [value]="option.value">
+                  {{ option.label }}
+                </mat-option>
+              </mat-select>
+              <input matInput *ngIf="!isSelect(subItem)" [(ngModel)]="subItem.value">
+            </mat-form-field>
+
+            <button mat-icon-button color="warn" (click)="removeCondition(item, j)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <!-- Nested Nested Group -->
+          <div *ngIf="isQueryGroup(subItem)" class="nested-group">
+            <div class="group-header">
+              <button mat-button (click)="toggleGroupType(subItem)">
+                {{ subItem.type }}
+              </button>
+              <button mat-icon-button (click)="addCondition(subItem)">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button (click)="addGroup(subItem)">
+                <mat-icon>create_new_folder</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="removeGroup(item, j)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

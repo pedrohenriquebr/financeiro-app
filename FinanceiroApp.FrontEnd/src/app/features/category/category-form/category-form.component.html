@@ -1,0 +1,75 @@
+<h2 mat-dialog-title>{{ isEditing ? 'Editar' : 'Nova' }} Categoria</h2>
+
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name" placeholder="Ex: Alimentação" required>
+        <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">
+          Nome é obrigatório
+        </mat-error>
+        <mat-error *ngIf="categoryForm.get('name')?.hasError('minlength')">
+          Nome deve ter pelo menos 3 caracteres
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="type" required>
+          <mat-option [value]="CategoryType_Income">Receita</mat-option>
+          <mat-option [value]="CategoryType_Expense">Despesa</mat-option>
+        </mat-select>
+        <mat-error *ngIf="categoryForm.get('type')?.hasError('required')">
+          Tipo é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Natureza</mat-label>
+        <mat-select formControlName="nature" required>
+          <mat-option [value]="CategoryNature_Fixed">Fixa</mat-option>
+          <mat-option [value]="CategoryNature_Variable">Variável</mat-option>
+        </mat-select>
+        <mat-error *ngIf="categoryForm.get('nature')?.hasError('required')">
+          Natureza é obrigatória
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Valor Planejado</mat-label>
+        <input matInput type="number" formControlName="plannedAmount" placeholder="Ex: 1000.00" required>
+        <span matPrefix>R$ &nbsp;</span>
+        <mat-error *ngIf="categoryForm.get('plannedAmount')?.hasError('required')">
+          Valor planejado é obrigatório
+        </mat-error>
+        <mat-error *ngIf="categoryForm.get('plannedAmount')?.hasError('min')">
+          Valor planejado deve ser maior ou igual a zero
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" [disabled]="isSubmitting" (click)="onCancel()">
+      Cancelar
+    </button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="categoryForm.invalid || isSubmitting">
+      <div class="button-content">
+        <span>{{ data ? 'Atualizar' : 'Criar' }}</span>
+        <mat-progress-spinner 
+          *ngIf="isSubmitting" 
+          diameter="20" 
+          mode="indeterminate" 
+          class="button-spinner">
+        </mat-progress-spinner>
+      </div>
+    </button>
+  </mat-dialog-actions>
+</form>

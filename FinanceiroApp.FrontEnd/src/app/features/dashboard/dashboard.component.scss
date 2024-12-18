@@ -1,0 +1,404 @@
+ @import '../../styles/variables';
+@import '../../styles/mixins';
+
+.dashboard-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: $container-max-width;
+  margin: 0 auto;
+
+  .filters-card {
+    margin-bottom: $spacing-md;
+    
+    .filters-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-md;
+      
+      mat-form-field {
+        flex: 1 1 200px;
+      }
+    }
+  }
+  
+  .overview-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+
+    mat-card {
+      background-color: $surface;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+      .amount {
+        font-size: 24px;
+        font-weight: 500;
+        margin: $spacing-md 0;
+      }
+
+      .trend {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        font-size: 14px;
+
+        &.positive {
+          color: $success;
+        }
+
+        &.negative {
+          color: $warn;
+        }
+      }
+
+      .details {
+        margin-top: $spacing-sm;
+        font-size: 14px;
+        color: $text-secondary;
+      }
+
+      .savings-rate {
+        margin-top: $spacing-sm;
+        font-size: 14px;
+        color: $success;
+      }
+
+      .details-list {
+        > div {
+          margin: $spacing-xs 0;
+          color: $text-secondary;
+        }
+      }
+    }
+  }
+
+  .account-balances {
+    margin-bottom: $spacing-md;
+
+    mat-card {
+      .mat-mdc-list {
+        padding: 0;
+      }
+
+      .mat-mdc-list-item {
+        height: auto;
+        margin: $spacing-md 0;
+        padding: $spacing-sm $spacing-md;
+      }
+
+      .account-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: $spacing-sm;
+        line-height: 24px;
+
+        span {
+          font-size: 16px;
+          
+          &.balance {
+            font-weight: 500;
+          }
+        }
+      }
+
+      .account-details {
+        display: flex;
+        gap: $spacing-md;
+        margin-top: $spacing-xs;
+        width: 100%;
+        line-height: 20px;
+
+        small {
+          color: $text-secondary;
+          font-size: 12px;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  .account-balances-section {
+    margin: 1rem 0;
+
+    .account-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .account-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .account-name {
+      font-weight: 500;
+    }
+
+    .account-balance {
+      &.positive {
+        color: #4caf50;
+      }
+
+      &.negative {
+        color: #f44336;
+      }
+    }
+  }
+
+  .category-analysis {
+    margin-bottom: $spacing-md;
+
+    mat-card {
+      .category-list {
+        .category-item {
+          margin: $spacing-md 0;
+
+          .category-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: $spacing-sm;
+          }
+
+          mat-progress-bar {
+            margin: $spacing-sm 0;
+          }
+
+          .category-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: $text-secondary;
+          }
+        }
+      }
+    }
+  }
+
+  .financial-goals {
+    margin-bottom: $spacing-md;
+
+    mat-card {
+      .goals-list {
+        .goal-item {
+          margin: $spacing-md 0;
+
+          .goal-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: $spacing-sm;
+          }
+
+          mat-progress-bar {
+            margin: $spacing-sm 0;
+          }
+
+          .goal-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: $text-secondary;
+          }
+        }
+      }
+    }
+  }
+
+  .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+
+    mat-expansion-panel {
+      width: 100%;
+      margin-bottom: 16px;
+
+      .mat-expansion-panel-header {
+        height: auto;
+        padding: 16px 24px;
+      }
+
+      .mat-expansion-panel-header-title {
+        align-items: center;
+        margin-right: 0;
+
+        .help-icon {
+          position: absolute;
+          top: -8px;
+          right: 8px;
+          color: #666;
+          cursor: help;
+          z-index: 1;
+        }
+      }
+
+      .chart-container {
+        width: 100%;
+        height: 400px;
+        position: relative;
+      }
+    }
+  }
+
+  .charts-section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+
+    mat-card {
+      .chart-container {
+        height: 300px;
+        margin: $spacing-md 0;
+      }
+    }
+  }
+
+  .cash-flow-projection {
+    mat-card {
+      .chart-container {
+        height: 300px;
+        margin: $spacing-md 0;
+      }
+
+      .upcoming-transactions {
+        margin-top: $spacing-md;
+
+        h3 {
+          margin-bottom: $spacing-md;
+          font-weight: 500;
+        }
+
+        .transaction-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: $spacing-sm 0;
+
+          span {
+            &.positive {
+              color: $success;
+            }
+
+            &.negative {
+              color: $warn;
+            }
+          }
+
+          small {
+            color: $text-secondary;
+          }
+        }
+      }
+    }
+  }
+
+  .cash-flow-chart {
+    .income-dot, .expense-dot {
+      transition: r 0.2s;
+      &:hover {
+        r: 6;
+      }
+    }
+
+    .domain {
+      stroke: #ccc;
+    }
+
+    .tick {
+      line {
+        stroke: #eee;
+      }
+      text {
+        fill: #666;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .chart-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  ::ng-deep {
+    .mat-expansion-panel-body {
+      padding: 16px 24px 24px;
+    }
+
+    .mat-tooltip {
+      font-size: 14px !important;
+      max-width: 300px !important;
+      white-space: pre-line !important;
+      padding: 8px 12px !important;
+    }
+  }
+}
+
+.account-distribution-chart {
+  .arc {
+    path {
+      transition: opacity 0.3s;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .total-label {
+    font-size: 14px;
+    fill: #666;
+  }
+
+  .total-value {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .legend {
+    .legend-item {
+      font-size: 12px;
+      
+      rect {
+        transition: opacity 0.3s;
+      }
+      
+      &:hover {
+        rect {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: $spacing-sm;
+
+    .overview-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .charts-section {
+      grid-template-columns: 1fr;
+    }
+  }
+}

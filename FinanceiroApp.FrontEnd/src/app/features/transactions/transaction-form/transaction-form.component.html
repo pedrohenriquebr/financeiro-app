@@ -1,0 +1,111 @@
+<h2 mat-dialog-title>{{isEditing ? 'Editar' : 'Nova'}} Transação</h2>
+
+<form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Data</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="transactionForm.get('date')?.errors?.['required']">
+          Data é obrigatória
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Valor</mat-label>
+        <input matInput currencyMask [options]="currencyMask" formControlName="amount" required>
+        <mat-hint>Use valores positivos para receitas e negativos para despesas</mat-hint>
+        <mat-error *ngIf="transactionForm.get('amount')?.errors?.['required']">
+          Valor é obrigatório
+        </mat-error>
+        <mat-error *ngIf="transactionForm.get('amount')?.errors?.['min']">
+          Valor deve ser diferente de zero
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Descrição</mat-label>
+        <input matInput formControlName="description" required>
+        <mat-error *ngIf="transactionForm.get('description')?.errors?.['required']">
+          Descrição é obrigatória
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Conta</mat-label>
+        <mat-select formControlName="bankAccountId" required>
+          <mat-option *ngFor="let account of bankAccounts" [value]="account.id">
+            {{account.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="transactionForm.get('bankAccountId')?.errors?.['required']">
+          Conta é obrigatória
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox formControlName="isTransfer" color="primary">
+        É uma transferência?
+      </mat-checkbox>
+    </div>
+
+    <div class="form-row" *ngIf="transactionForm.get('isTransfer')?.value">
+      <mat-form-field appearance="outline">
+        <mat-label>Conta de Destino</mat-label>
+        <mat-select formControlName="destinationBankAccountId" required>
+          <mat-option *ngFor="let account of bankAccounts" [value]="account.id">
+            {{account.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="transactionForm.get('destinationBankAccountId')?.errors?.['required']">
+          Conta de destino é obrigatória
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row" *ngIf="!transactionForm.get('isTransfer')?.value">
+      <mat-form-field appearance="outline">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="categoryId" required>
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{category.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="transactionForm.get('categoryId')?.errors?.['required']">
+          Categoria é obrigatória
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" required>
+          <mat-option value="Pending">Pendente</mat-option>
+          <mat-option value="Completed">Concluído</mat-option>
+          <mat-option value="Cancelled">Cancelado</mat-option>
+        </mat-select>
+        <mat-error *ngIf="transactionForm.get('status')?.errors?.['required']">
+          Status é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Observações</mat-label>
+      <textarea matInput formControlName="notes" rows="3"></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" [mat-dialog-close]="false">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="transactionForm.invalid || isSubmitting">
+      {{isSubmitting ? 'Salvando...' : 'Salvar'}}
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,77 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <div class="sidenav-header">
+      <div class="user-info" *ngIf="user$ | async as user">
+        <img [src]="user.safePicture" alt="Profile" class="profile-pic">
+        <div class="user-details">
+          <span class="user-name">{{ user.name }}</span>
+          <span class="user-email">{{ user.email }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a mat-list-item routerLink="/transactions" routerLinkActive="active">
+        <mat-icon>swap_horiz</mat-icon>
+        <span>Transações</span>
+      </a>
+      <a mat-list-item routerLink="/categories" routerLinkActive="active">
+        <mat-icon>category</mat-icon>
+        <span>Categorias</span>
+      </a>
+      <a mat-list-item routerLink="/bank-accounts" routerLinkActive="active">
+        <mat-icon>account_balance</mat-icon>
+        <span>Contas Bancárias</span>
+      </a>
+      <a mat-list-item routerLink="/banks" routerLinkActive="active">
+        <mat-icon>account_balance_wallet</mat-icon>
+        <span>Bancos</span>
+      </a>
+      <a mat-list-item routerLink="/description-mappings" routerLinkActive="active">
+        <mat-icon>compare_arrows</mat-icon>
+        <span>Mapeamentos</span>
+      </a>
+      <a mat-list-item routerLink="/financial-goals" routerLinkActive="active">
+        <mat-icon>flag</mat-icon>
+        <span>Metas Financeiras</span>
+      </a>
+      
+      <mat-divider></mat-divider>
+      
+      <a mat-list-item (click)="logout()" class="logout-item">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Sair</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span class="toolbar-title">FinanceiroApp</span>
+      <span class="toolbar-spacer"></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="User menu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Sair</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+    
+    <div class="content-container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,42 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .title-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    h1 {
+      margin: 0;
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.container {
+  @include list-container;
+  padding: 20px;
+
+  .header {
+    @include page-header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+
+    .actions {
+      display: flex;
+      gap: $spacing-sm;
+    }
+  }
+}

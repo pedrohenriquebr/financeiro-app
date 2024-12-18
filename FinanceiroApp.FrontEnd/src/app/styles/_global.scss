@@ -1,0 +1,153 @@
+@import './variables';
+
+// Container styles
+.container {
+  padding: $container-padding;
+  max-width: $container-max-width;
+  margin: 0 auto;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+
+    h2 {
+      margin: 0;
+    }
+  }
+}
+
+// Form styles
+.form-row {
+  margin-bottom: $form-field-margin;
+  
+  mat-form-field {
+    width: $form-field-width;
+  }
+}
+
+// Table styles
+.mat-elevation-z8 {
+  position: relative;
+  box-shadow: $card-shadow;
+  border-radius: $card-border-radius;
+  
+  mat-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-top-left-radius: $card-border-radius;
+    border-top-right-radius: $card-border-radius;
+  }
+}
+
+table.mat-table {
+  width: 100%;
+
+  .mat-header-cell {
+    font-weight: $table-header-font-weight;
+    color: $table-header-color;
+    padding: $table-cell-padding;
+  }
+
+  .mat-cell {
+    padding: $table-cell-padding;
+  }
+
+  .mat-column-actions {
+    width: $table-actions-width;
+    text-align: center;
+
+    button {
+      margin: 0 $spacing-xs;
+    }
+  }
+}
+
+// Filter field
+.filter-field {
+  width: 100%;
+  margin-bottom: $spacing-lg;
+}
+
+// Dialog styles
+.mat-dialog-container {
+  padding: $dialog-content-padding !important;
+}
+
+mat-dialog-content {
+  min-height: $dialog-min-height;
+  padding: $dialog-content-padding !important;
+  margin: 0 !important;
+}
+
+mat-dialog-actions {
+  padding: $dialog-actions-padding !important;
+  margin: 0 !important;
+  
+  button {
+    margin-left: $button-spacing;
+
+    mat-progress-spinner {
+      display: inline-block;
+      margin-right: $spacing-sm;
+      vertical-align: middle;
+    }
+  }
+}
+
+// Card styles
+mat-card {
+  margin: $card-margin;
+  border-radius: $card-border-radius;
+  box-shadow: $card-shadow !important;
+
+  mat-card-header {
+    margin-bottom: $spacing-md;
+  }
+
+  mat-card-content {
+    padding: $card-padding;
+  }
+
+  mat-card-actions {
+    padding: $card-padding;
+    margin: 0;
+  }
+}
+
+// Button styles
+button[mat-raised-button], 
+button[mat-button] {
+  .mat-icon {
+    margin-right: $spacing-sm;
+    font-size: $button-icon-size;
+    height: $button-icon-size;
+    width: $button-icon-size;
+    line-height: $button-icon-size;
+  }
+}
+
+// Status indicators
+.status {
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $card-border-radius;
+  font-weight: 500;
+  
+  &.success {
+    background-color: rgba($success, 0.1);
+    color: $success;
+  }
+  
+  &.warning {
+    background-color: rgba($warn, 0.1);
+    color: $warn;
+  }
+  
+  &.info {
+    background-color: rgba($info, 0.1);
+    color: $info;
+  }
+}

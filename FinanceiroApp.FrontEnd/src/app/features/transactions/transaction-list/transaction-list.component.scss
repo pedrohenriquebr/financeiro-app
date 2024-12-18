@@ -1,0 +1,128 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.container {
+  @include list-container;
+
+  .header {
+    @include page-header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .actions {
+      display: flex;
+      gap: $spacing-sm;
+    }
+  }
+
+  .filter {
+    @include filter-field;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .mat-elevation-z8 {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .loading-shade {
+    @include loading-overlay;
+  }
+
+  .mat-mdc-table {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .mat-column-actions {
+    width: 100px;
+    text-align: center;
+  }
+
+  .mat-column-date {
+    width: 120px;
+  }
+
+  .mat-column-amount {
+    width: 150px;
+    text-align: right;
+    
+    &.expense {
+      color: $warn;
+    }
+    
+    &.income {
+      color: $success;
+    }
+  }
+
+  .mat-column-category,
+  .mat-column-bankAccount {
+    width: 180px;
+  }
+
+  .filters-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .summary-container {
+    display: flex;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-lg;
+    
+    .summary-card {
+      flex: 1;
+      padding: $spacing-md;
+      border-radius: $card-border-radius;
+      background-color: white;
+      box-shadow: $card-shadow;
+      
+      .summary-value {
+        font-size: 20px;
+        font-weight: 500;
+        margin: $spacing-xs 0;
+        
+        &.income {
+          color: $success;
+        }
+        
+        &.expense {
+          color: $warn;
+        }
+      }
+      
+      .summary-label {
+        color: $text-secondary;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .no-data {
+    padding: $spacing-xl !important;
+
+    .no-data-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-md;
+      color: rgba(0, 0, 0, 0.54);
+
+      mat-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+      }
+    }
+  }
+}

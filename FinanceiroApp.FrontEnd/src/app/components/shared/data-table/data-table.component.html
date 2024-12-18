@@ -1,0 +1,88 @@
+<div class="table-container">
+  <!-- Campo de filtro -->
+  <mat-form-field *ngIf="dataSource?.filter !== undefined" appearance="outline" class="filter-field">
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Digite para filtrar" #input>
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  
+  <!-- Advanced Filter Button -->
+  <button *ngIf="queryConfig" mat-stroked-button color="primary" (click)="openQueryBuilder()"
+    class="advanced-filter-btn">
+    <mat-icon>filter_list</mat-icon>
+    Filtro Avançado
+    <span *ngIf="activeFilters > 0" class="filter-badge">{{activeFilters}}</span>
+  </button>
+
+  <!-- Container da tabela com overlay de loading -->
+  <div class="table-wrapper">
+    <!-- Overlay de loading -->
+    <div *ngIf="loading" class="loading-overlay">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+
+    <!-- Tabela -->
+    <mat-table [dataSource]="dataSource" matSort [class.loading]="loading">
+      <!-- Coluna de seleção -->
+      <ng-container matColumnDef="select" *ngIf="showSelection">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? toggleRow(row) : null"
+            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Colunas dinâmicas -->
+      <ng-container *ngFor="let column of columns" [matColumnDef]="column.property">
+        <mat-header-cell *matHeaderCellDef [mat-sort-header]="column.sortable ? column.property : ''">
+          {{column.label}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <ng-container [ngSwitch]="column.type">
+            <span *ngSwitchCase="'date'">{{row[column.property] | date:column.format}}</span>
+            <span *ngSwitchCase="'currency'">{{row[column.property] | currency:'BRL'}}</span>
+            <span *ngSwitchCase="'number'">{{row[column.property] | number}}</span>
+            <span *ngSwitchDefault>
+              {{column.transform ? column.transform(row[column.property]) : row[column.property]}}
+            </span>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Coluna de ações -->
+      <ng-container matColumnDef="actions" *ngIf="actions.length > 0">
+        <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button *ngFor="let action of actions" mat-icon-button [color]="action.color || 'primary'"
+            [matTooltip]="action.tooltip" (click)="onActionClick(action, row)">
+            <mat-icon>{{action.icon}}</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Linhas da tabela -->
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      <!-- Linha de sem dados -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data" [attr.colspan]="displayedColumns.length">
+          <div class="no-data-content">
+            <mat-icon>info</mat-icon>
+            <span>Nenhum registro encontrado</span>
+          </div>
+        </td>
+      </tr>
+    </mat-table>
+
+    <!-- Paginador -->
+    <mat-paginator *ngIf="showPaginator" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+      aria-label="Selecione a página">
+    </mat-paginator>
+  </div>
+</div>

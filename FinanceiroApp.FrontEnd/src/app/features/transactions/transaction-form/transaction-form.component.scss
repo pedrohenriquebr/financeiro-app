@@ -1,0 +1,123 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+:host {
+  display: block;
+  min-width: $dialog-min-width;
+  max-width: $dialog-max-width;
+}
+
+.form-container {
+  @include form-container;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    .row {
+      display: flex;
+      gap: $spacing-md;
+
+      mat-form-field {
+        flex: 1;
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+  }
+
+  .loading-shade {
+    @include loading-overlay;
+  }
+
+  .button-spinner {
+    margin-left: $spacing-sm;
+  }
+}
+
+// Ajustes para campos numéricos
+input[type="number"] {
+  text-align: right;
+}
+
+// Ajustes responsivos
+@media (max-width: 600px) {
+  .row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+// Estilo específico para o campo de valor
+.amount-field {
+  mat-form-field {
+    width: 200px;
+  }
+}
+
+// Estilo para o seletor de tipo
+.type-selector {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+  
+  mat-button-toggle-group {
+    margin: 0 auto;
+  }
+  
+  .expense-toggle {
+    color: $warn;
+  }
+  
+  .income-toggle {
+    color: $success;
+  }
+}
+
+// Estilo para a seção de anexos
+.attachments-section {
+  margin-top: $spacing-lg;
+  
+  .attachment-list {
+    margin-top: $spacing-md;
+    
+    .attachment-item {
+      display: flex;
+      align-items: center;
+      padding: $spacing-sm;
+      border-radius: $card-border-radius;
+      background-color: rgba(0, 0, 0, 0.04);
+      margin-bottom: $spacing-sm;
+      
+      .attachment-name {
+        flex: 1;
+        margin: 0 $spacing-md;
+      }
+    }
+  }
+  
+  .drop-zone {
+    border: 2px dashed rgba(0, 0, 0, 0.12);
+    border-radius: $card-border-radius;
+    padding: $spacing-lg;
+    text-align: center;
+    cursor: pointer;
+    transition: all $transition-duration $transition-timing;
+    
+    &:hover {
+      border-color: $primary;
+      background-color: rgba($primary, 0.04);
+    }
+    
+    &.dragover {
+      border-color: $primary;
+      background-color: rgba($primary, 0.08);
+    }
+  }
+}

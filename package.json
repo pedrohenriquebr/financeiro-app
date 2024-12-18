@@ -1,0 +1,17 @@
+{
+  "name": "financeiro-app",
+  "version": "1.0.0",
+  "description": "Aplicativo de Controle Financeiro",
+  "scripts": {
+    "build-api": "dotnet publish Financeiro.API/Financeiro.API.csproj -c Release",
+    "generate-icons": "node scripts/generate-icons.js",
+    "tauri": "tauri",
+    "dev": "pnpm run generate-icons && pnpm run build-api && tauri dev",
+    "build": "pnpm run generate-icons && pnpm run build-api && tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.6.3",
+    "sharp": "^0.33.5",
+    "png-to-ico": "^2.1.8"
+  }
+}

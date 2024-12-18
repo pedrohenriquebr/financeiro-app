@@ -1,0 +1,9 @@
+@import '../../../styles/variables';
+
+:host {
+  display: block;
+  min-width: $dialog-min-width;
+  max-width: $dialog-max-width;
+}
+
+// O resto dos estilos já está definido em _global.scss

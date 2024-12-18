@@ -1,0 +1,89 @@
+@import 'variables';
+
+@mixin card-container {
+  padding: $spacing-md;
+  background-color: $surface;
+  border-radius: $card-border-radius;
+  box-shadow: $shadow-sm;
+}
+
+@mixin list-container {
+  padding: $spacing-md;
+  background-color: $surface;
+  min-height: calc(100vh - 64px);
+}
+
+@mixin form-container {
+  padding: $spacing-md;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@mixin page-header {
+  margin-bottom: $spacing-lg;
+  font-family: $font-family;
+  h1 {
+    font-size: $font-size-xl;
+    font-weight: 500;
+    margin: 0;
+    color: $text-primary;
+  }
+}
+
+@mixin loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($surface, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: $z-index-overlay;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: $breakpoint-sm - 1) { @content; }
+  }
+  @if $breakpoint == tablet {
+    @media (max-width: $breakpoint-md - 1) { @content; }
+  }
+  @if $breakpoint == desktop {
+    @media (min-width: $breakpoint-md) { @content; }
+  }
+}
+
+@mixin filter-field {
+  width: 100%;
+  
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+
+  .mat-form-field-flex {
+    padding: 0 0.75em;
+  }
+
+  .mat-form-field-infix {
+    padding: 0.5em 0;
+    border-top: 0.5em solid transparent;
+  }
+}

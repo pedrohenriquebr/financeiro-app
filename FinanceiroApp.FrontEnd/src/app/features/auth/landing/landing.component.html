@@ -1,0 +1,196 @@
+<div class="landing-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <h1>Gerencie suas finanças com simplicidade</h1>
+      <p class="hero-subtitle">Uma solução open source para controle financeiro pessoal, totalmente gratuita e focada na sua privacidade</p>
+      
+      <div class="hero-buttons">
+        <a mat-stroked-button href="https://github.com/pedrohenriquebr/FinanceiroApp" target="_blank" class="github-btn">
+          <mat-icon>code</mat-icon>
+          Ver no GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="features-section">
+    <h2>Funcionalidades que facilitam sua vida</h2>
+    <div class="features-grid">
+      <mat-card class="feature-card">
+        <mat-card-content>
+          <mat-icon>dashboard</mat-icon>
+          <h3>Dashboard Intuitivo</h3>
+          <p>Acompanhe suas finanças com gráficos interativos, saldo atual, receitas e despesas mensais</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="feature-card">
+        <mat-card-content>
+          <mat-icon>account_balance_wallet</mat-icon>
+          <h3>Múltiplas Contas</h3>
+          <p>Gerencie diferentes contas bancárias, carteiras e faça transferências entre elas</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="feature-card">
+        <mat-card-content>
+          <mat-icon>trending_up</mat-icon>
+          <h3>Metas Financeiras</h3>
+          <p>Estabeleça objetivos financeiros e acompanhe seu progresso em tempo real</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="feature-card">
+        <mat-card-content>
+          <mat-icon>lock</mat-icon>
+          <h3>Privacidade Primeiro</h3>
+          <p>Seus dados são seus. Controle total sobre suas informações financeiras</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Advanced Features Section -->
+  <div class="advanced-features-section">
+    <h2>Recursos Avançados</h2>
+    <div class="advanced-features-grid">
+      <div class="feature-item">
+        <mat-icon>upload_file</mat-icon>
+        <h3>Importação de Extratos</h3>
+        <p>Importe facilmente seus extratos bancários em CSV, com mapeamento automático de categorias</p>
+      </div>
+      <div class="feature-item">
+        <mat-icon>download</mat-icon>
+        <h3>Exportação para Excel</h3>
+        <p>Exporte seus dados para planilhas Excel e faça análises detalhadas do seu orçamento</p>
+      </div>
+      <div class="feature-item">
+        <mat-icon>sync</mat-icon>
+        <h3>Transações Recorrentes</h3>
+        <p>Configure pagamentos e receitas recorrentes para melhor planejamento financeiro</p>
+      </div>
+      <div class="feature-item">
+        <mat-icon>category</mat-icon>
+        <h3>Categorização Inteligente</h3>
+        <p>Sistema inteligente que aprende e sugere categorias com base em suas transações anteriores</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefits Section -->
+  <div class="benefits-section">
+    <h2>Por que escolher o FinanceiroApp?</h2>
+    <div class="benefits-grid">
+      <div class="benefit-item">
+        <mat-icon>code</mat-icon>
+        <h3>100% Open Source</h3>
+        <p>Código aberto e transparente, permitindo que a comunidade contribua e audite</p>
+      </div>
+      <div class="benefit-item">
+        <mat-icon>cloud_off</mat-icon>
+        <h3>Seus Dados, Seu Controle</h3>
+        <p>Diferente de apps tradicionais, você tem total controle sobre seus dados financeiros</p>
+      </div>
+      <div class="benefit-item">
+        <mat-icon>update</mat-icon>
+        <h3>Sempre Atualizado</h3>
+        <p>Atualizações frequentes com novas funcionalidades e melhorias de segurança</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials Section -->
+  <div class="testimonials-section">
+    <h2>O que dizem nossos usuários</h2>
+    <div class="testimonials-grid">
+      <mat-card class="testimonial-card">
+        <mat-card-content>
+          <p class="testimonial-text">"Excelente app para controle financeiro. Simples e eficiente!"</p>
+          <div class="testimonial-author">
+            <mat-icon>person</mat-icon>
+            <p>Maria Silva</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="testimonial-card">
+        <mat-card-content>
+          <p class="testimonial-text">"O melhor app open source que já usei para finanças pessoais."</p>
+          <div class="testimonial-author">
+            <mat-icon>person</mat-icon>
+            <p>João Santos</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="testimonial-card">
+        <mat-card-content>
+          <p class="testimonial-text">"Ótimo para quem busca privacidade e controle total dos dados."</p>
+          <div class="testimonial-author">
+            <mat-icon>person</mat-icon>
+            <p>Ana Costa</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Open Source Section -->
+  <div class="open-source-section">
+    <h2>Software Livre e Open Source</h2>
+    <p>O FinanceiroApp é um projeto de código aberto, livre para usar, modificar e distribuir. Acreditamos que ferramentas financeiras devem ser acessíveis a todos.</p>
+    
+    <div class="support-buttons">
+      <button mat-raised-button color="primary" (click)="openDonateDialog()">
+        <mat-icon>favorite</mat-icon>
+        Apoie o Projeto
+      </button>
+      <a mat-stroked-button href="https://github.com/pedrohenriquebr/FinanceiroApp/issues" target="_blank">
+        <mat-icon>bug_report</mat-icon>
+        Reportar Bug
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>FinanceiroApp</h3>
+        <p>Desenvolvido com ❤️ por Pedro Braga</p>
+        <div class="social-links">
+          <a href="https://github.com/pedrohenriquebr" target="_blank" mat-icon-button>
+            <mat-icon>code</mat-icon>
+          </a>
+          <a href="https://linkedin.com/in/pedro-braga-" target="_blank" mat-icon-button>
+            <mat-icon>linkedin</mat-icon>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h4>Links Úteis</h4>
+        <ul>
+          <li><a href="https://github.com/pedrohenriquebr/FinanceiroApp">Documentação</a></li>
+          <li><a href="https://github.com/pedrohenriquebr/FinanceiroApp/issues">Reportar Bugs</a></li>
+          <li><a href="https://github.com/pedrohenriquebr/FinanceiroApp/blob/main/LICENSE">Licença</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Contribua</h4>
+        <ul>
+          <li><a href="#" (click)="openDonateDialog()">Fazer uma Doação</a></li>
+          <li><a href="https://github.com/pedrohenriquebr/FinanceiroApp/fork">Fork no GitHub</a></li>
+          <li><a href="https://github.com/pedrohenriquebr/FinanceiroApp/stargazers">Dar uma Estrela</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2024 FinanceiroApp. Software Livre sob licença MIT.</p>
+    </div>
+  </footer>
+</div>

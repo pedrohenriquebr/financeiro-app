@@ -1,0 +1,215 @@
+<div class="dashboard-container">
+  <!-- Filtros -->
+  <div class="filters-section">
+    <form [formGroup]="filterForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Período</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate formControlName="startDate" placeholder="Data inicial">
+          <input matEndDate formControlName="endDate" placeholder="Data final">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Contas</mat-label>
+        <mat-select formControlName="bankAccountIds" multiple>
+          <mat-option *ngFor="let account of bankAccounts" [value]="account.id">
+            {{account.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Agrupar por</mat-label>
+        <mat-select formControlName="groupBy">
+          <mat-option value="day">Dia</mat-option>
+          <mat-option value="week">Semana</mat-option>
+          <mat-option value="month">Mês</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <!-- Indicadores -->
+  <div class="metrics-grid">
+    <mat-card>
+      <mat-card-content>
+        <div class="metric">
+          <div class="metric-value">{{totalBalance | currency:'BRL'}}</div>
+          <div class="metric-label">Saldo Total</div>
+          <div class="metric-change" [ngClass]="{'positive': monthOverMonthChange >= 0, 'negative': monthOverMonthChange < 0}">
+            {{monthOverMonthChange | percent:'1.1'}}
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <div class="metric">
+          <div class="metric-value">{{monthlyIncome | currency:'BRL'}}</div>
+          <div class="metric-label">Receitas do Mês</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <div class="metric">
+          <div class="metric-value">{{monthlyExpenses | currency:'BRL'}}</div>
+          <div class="metric-label">Despesas do Mês</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <div class="metric">
+          <div class="metric-value">{{savingsRate | percent:'1.1'}}</div>
+          <div class="metric-label">Taxa de Economia</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+
+  <mat-accordion>
+  <!-- Saldos por Conta -->
+  <div class="account-balances-section" *ngIf="accountBalances?.length">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Saldos por Conta</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="account-list">
+          <div class="account-item" *ngFor="let account of accountBalances">
+            <div class="account-name">{{account.bankAccountName}}</div>
+            <div class="account-balance" [ngClass]="{'positive': account.currentBalance >= 0, 'negative': account.currentBalance < 0}">
+              {{account.currentBalance | currency:'BRL'}}
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+</mat-accordion>
+
+
+  <!-- Gráficos -->
+  <div class="charts-section">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span>Fluxo de Caixa</span>
+          <button mat-icon-button class="help-icon" 
+                  matTooltip="Este gráfico mostra o fluxo de caixa mensal, incluindo:&#13;&#10;- Receitas (verde): Total de entradas&#13;&#10;- Despesas (vermelho): Total de saídas&#13;&#10;- Saldo (azul): Diferença entre receitas e despesas">
+            <mat-icon>help_outline</mat-icon>
+          </button>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="chart-container" #cashFlowChart></div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span>Distribuição por Conta</span>
+          <button mat-icon-button class="help-icon"
+                  matTooltip="Este gráfico mostra como seu dinheiro está distribuído entre suas contas:&#13;&#10;- Cada fatia representa uma conta&#13;&#10;- A porcentagem indica quanto do total está em cada conta">
+            <mat-icon>help_outline</mat-icon>
+          </button>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="chart-container" #accountDistributionChart></div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span>Projeção Financeira</span>
+          <button mat-icon-button class="help-icon"
+                  matTooltip="Este gráfico mostra a projeção do seu saldo para os próximos meses:&#13;&#10;- Linha azul: Histórico real&#13;&#10;- Linha pontilhada: Projeção futura&#13;&#10;- Área sombreada: Intervalo de confiança da projeção">
+            <mat-icon>help_outline</mat-icon>
+          </button>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="chart-container" #projectionChart></div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span>Análise por Categoria</span>
+          <button mat-icon-button class="help-icon"
+                  matTooltip="Este gráfico analisa suas transações por categoria:&#13;&#10;- Selecione entre Despesas ou Receitas&#13;&#10;- Veja a distribuição percentual por categoria&#13;&#10;- Compare os valores entre diferentes períodos">
+            <mat-icon>help_outline</mat-icon>
+          </button>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="chart-container">
+        <mat-button-toggle-group [(ngModel)]="selectedCategoryType" (change)="renderCategoryChart()">
+          <mat-button-toggle value="expenses">Despesas</mat-button-toggle>
+          <mat-button-toggle value="income">Receitas</mat-button-toggle>
+        </mat-button-toggle-group>
+        <div #categoryChart></div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+
+  <!-- Metas Financeiras -->
+  <div class="goals-section">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          Metas Financeiras
+          <button mat-mini-fab color="primary" (click)="openGoalDialog()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="goals-list" *ngIf="financialGoals?.length; else noGoals">
+          <mat-card *ngFor="let goal of financialGoals" class="goal-card">
+            <mat-card-header>
+              <mat-card-title>{{goal.name}}</mat-card-title>
+              <mat-card-subtitle>
+                Meta: {{goal.targetAmount | currency:'BRL'}}
+                <span class="goal-deadline">Prazo: {{getRemainingTime(goal)}}</span>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-progress-bar
+                mode="determinate"
+                [value]="(goal.currentAmount / goal.targetAmount) * 100">
+              </mat-progress-bar>
+              <div class="goal-details">
+                <span>Atual: {{goal.currentAmount | currency:'BRL'}}</span>
+                <span>Faltam: {{goal.targetAmount - goal.currentAmount | currency:'BRL'}}</span>
+              </div>
+              <div class="monthly-goal">
+                Necessário por mês: {{calculateMonthlyGoalAmount(goal) | currency:'BRL'}}
+              </div>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-button color="primary" (click)="openGoalDialog(goal)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <ng-template #noGoals>
+          <div class="no-goals">
+            <p>Você ainda não tem metas financeiras cadastradas.</p>
+            <button mat-raised-button color="primary" (click)="openGoalDialog()">
+              Criar Meta
+            </button>
+          </div>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <app-scheduled-transactions-list></app-scheduled-transactions-list>
+</div>

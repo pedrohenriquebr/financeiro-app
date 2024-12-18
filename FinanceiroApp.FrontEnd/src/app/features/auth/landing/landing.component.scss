@@ -1,0 +1,631 @@
+// Design System Variables
+$primary-color: #1a237e;
+$primary-light: #534bae;
+$primary-dark: #000051;
+$accent-color: #ffd740;
+$text-light: #ffffff;
+$text-dark: #1a1a1a;
+$spacing-unit: 1rem;
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.landing-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
+  color: $text-light;
+}
+
+.hero-section {
+  padding: calc($spacing-unit * 6) $spacing-unit;
+  text-align: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: calc($spacing-unit * 1.5);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      margin-bottom: calc($spacing-unit * 3);
+      opacity: 0.95;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: $spacing-unit;
+    justify-content: center;
+    align-items: center;
+    margin-top: calc($spacing-unit * 2);
+    flex-wrap: wrap;
+
+    .login-button {
+      display: none; // Esconde o botão personalizado por padrão
+      background-color: #fff;
+      color: rgba(0, 0, 0, 0.87);
+      padding: 0 24px;
+      height: 40px;
+      font-family: "Google Sans", Roboto, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 24px;
+      border: 1px solid #dadce0;
+      box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+      transition: box-shadow 0.2s;
+
+      &:hover {
+        box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+        background-color: #f6f6f6;
+      }
+
+      &.fallback-visible {
+        display: flex; // Mostra apenas quando o botão do Google falhar
+      }
+
+      mat-icon {
+        margin-right: 8px;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .google-btn-container {
+      min-width: 240px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .github-btn {
+      background-color: #fff;
+      color: rgba(0, 0, 0, 0.87);
+      padding: 0 24px;
+      height: 40px;
+      font-family: "Google Sans", Roboto, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 24px;
+      border: 1px solid #dadce0;
+      box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+      transition: box-shadow 0.2s;
+
+      &:hover {
+        box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+        background-color: #f6f6f6;
+      }
+
+      mat-icon {
+        margin-right: 8px;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+.google-btn {
+  background-color: $text-light;
+  color: $text-dark;
+  padding: 0 calc($spacing-unit * 1.5);
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-unit;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  border-radius: 24px;
+  transition: all 0.2s ease-in-out;
+
+  .google-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    background-color: darken($text-light, 5%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.github-btn {
+  background-color: $text-light;
+  color: $primary-color;
+  border: none;
+  padding: 0 calc($spacing-unit * 1.5);
+  height: 48px;
+  font-weight: 500;
+  border-radius: 24px;
+  transition: all 0.2s ease-in-out;
+
+  mat-icon {
+    margin-right: $spacing-unit;
+  }
+
+  &:hover {
+    background-color: darken($text-light, 5%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.features-section {
+  padding: calc($spacing-unit * 6) $spacing-unit;
+  background: rgba(255, 255, 255, 0.05);
+
+  h2 {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: calc($spacing-unit * 4);
+    font-weight: 600;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: calc($spacing-unit * 2);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-unit;
+  }
+
+  .feature-card {
+    background: rgba(255, 255, 255, 0.98);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    mat-card-content {
+      text-align: center;
+      padding: calc($spacing-unit * 2);
+      color: $text-dark;
+
+      mat-icon {
+        font-size: 3rem;
+        height: 3rem;
+        width: 3rem;
+        margin-bottom: calc($spacing-unit * 1.5);
+        color: $primary-color;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: $spacing-unit;
+        color: $primary-color;
+        font-weight: 600;
+      }
+
+      p {
+        color: rgba($text-dark, 0.87);
+        line-height: 1.6;
+      }
+    }
+  }
+}
+
+.open-source-section {
+  padding: calc($spacing-unit * 6) $spacing-unit;
+  text-align: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: calc($spacing-unit * 1.5);
+    font-weight: 600;
+  }
+
+  p {
+    max-width: 700px;
+    margin: 0 auto calc($spacing-unit * 3);
+    opacity: 0.95;
+    line-height: 1.6;
+    font-size: 1.1rem;
+  }
+
+  .support-buttons {
+    display: flex;
+    gap: calc($spacing-unit * 1.5);
+    justify-content: center;
+    flex-wrap: wrap;
+
+    button,
+    a {
+      min-width: 180px;
+      height: 48px;
+      border-radius: 24px;
+      font-weight: 500;
+      transition: all 0.2s ease-in-out;
+    }
+
+    button[color="primary"] {
+      background-color: $accent-color;
+      color: $text-dark;
+
+      &:hover {
+        background-color: darken($accent-color, 5%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    a[mat-stroked-button] {
+      color: $text-light;
+      border: 2px solid $text-light;
+
+      &:hover {
+        background-color: $text-light;
+        color: $primary-color;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+.site-footer {
+  background: rgba(0, 0, 0, 0.3);
+  padding: calc($spacing-unit * 4) $spacing-unit calc($spacing-unit * 2);
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: calc($spacing-unit * 3);
+    padding: 0 $spacing-unit;
+
+    .footer-section {
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: calc($spacing-unit * 1.5);
+        font-weight: 600;
+        color: $text-light;
+      }
+
+      h4 {
+        font-size: 1.2rem;
+        margin-bottom: calc($spacing-unit * 1.5);
+        font-weight: 500;
+        color: $text-light;
+      }
+
+      p {
+        color: rgba($text-light, 0.9);
+        margin-bottom: $spacing-unit;
+        line-height: 1.6;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+          margin-bottom: calc($spacing-unit * 0.75);
+
+          a {
+            color: rgba($text-light, 0.8);
+            text-decoration: none;
+            transition: all 0.2s ease;
+
+            &:hover {
+              color: $text-light;
+              padding-left: 5px;
+            }
+          }
+        }
+      }
+
+      .social-links {
+        display: flex;
+        gap: calc($spacing-unit * 0.5);
+
+        a {
+          color: $text-light;
+          opacity: 0.8;
+          transition: all 0.2s ease;
+
+          &:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: calc($spacing-unit * 3);
+    padding-top: calc($spacing-unit * 2);
+    border-top: 1px solid rgba($text-light, 0.1);
+
+    p {
+      color: rgba($text-light, 0.6);
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.statistics-section {
+  padding: calc($spacing-unit * 6) $spacing-unit;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+
+  .stat-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: calc($spacing-unit * 3);
+
+    .stat-item {
+      text-align: center;
+      padding: calc($spacing-unit * 2);
+
+      mat-icon {
+        font-size: 3rem;
+        height: 3rem;
+        width: 3rem;
+        color: $accent-color;
+        margin-bottom: $spacing-unit;
+      }
+
+      h3 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: $text-light;
+        margin-bottom: calc($spacing-unit * 0.5);
+      }
+
+      p {
+        color: rgba($text-light, 0.9);
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+.advanced-features-section {
+  padding: calc($spacing-unit * 6) $spacing-unit;
+  background: rgba(255, 255, 255, 0.02);
+
+  h2 {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: calc($spacing-unit * 4);
+    font-weight: 600;
+    color: $text-light;
+  }
+
+  .advanced-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: calc($spacing-unit * 3);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-unit;
+
+    .feature-item {
+      text-align: center;
+      padding: calc($spacing-unit * 2);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      transition: transform 0.3s ease, background 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      mat-icon {
+        font-size: 2.5rem;
+        height: 2.5rem;
+        width: 2.5rem;
+        color: $accent-color;
+        margin-bottom: calc($spacing-unit * 1.5);
+      }
+
+      h3 {
+        color: $text-light;
+        font-size: 1.3rem;
+        margin-bottom: $spacing-unit;
+        font-weight: 500;
+      }
+
+      p {
+        color: rgba($text-light, 0.9);
+        line-height: 1.6;
+      }
+    }
+  }
+}
+
+.testimonials-section {
+  padding: calc($spacing-unit * 6) $spacing-unit;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+
+  h2 {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: calc($spacing-unit * 4);
+    font-weight: 600;
+    color: $text-light;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: calc($spacing-unit * 2);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-unit;
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      mat-card-content {
+        padding: calc($spacing-unit * 2);
+
+        .testimonial-text {
+          font-size: 1.1rem;
+          line-height: 1.6;
+          color: $text-dark;
+          margin-bottom: calc($spacing-unit * 2);
+          font-style: italic;
+        }
+
+        .testimonial-author {
+          display: flex;
+          align-items: center;
+          gap: $spacing-unit;
+
+          mat-icon {
+            color: $primary-color;
+          }
+
+          p {
+            color: $primary-color;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Benefits Section
+.benefits-section {
+  padding: calc($spacing-unit * 6) $spacing-unit;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+
+  h2 {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: calc($spacing-unit * 4);
+    font-weight: 600;
+    color: $text-light;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: calc($spacing-unit * 3);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-unit;
+
+    .benefit-item {
+      text-align: center;
+      padding: calc($spacing-unit * 2);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      transition: transform 0.3s ease, background 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      mat-icon {
+        font-size: 3rem;
+        height: 3rem;
+        width: 3rem;
+        color: $accent-color;
+        margin-bottom: calc($spacing-unit * 1.5);
+      }
+
+      h3 {
+        color: $text-light;
+        font-size: 1.5rem;
+        margin-bottom: $spacing-unit;
+        font-weight: 600;
+      }
+
+      p {
+        color: rgba($text-light, 0.9);
+        line-height: 1.6;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+
+    button,
+    a {
+      width: 100%;
+    }
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .support-buttons {
+    flex-direction: column;
+    align-items: center;
+
+    button,
+    a {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+
+  .statistics-section {
+    .stat-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .advanced-features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}

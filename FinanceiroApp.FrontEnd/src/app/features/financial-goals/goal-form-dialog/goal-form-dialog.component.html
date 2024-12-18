@@ -1,0 +1,69 @@
+<h2 mat-dialog-title>{{ data ? 'Editar Meta' : 'Nova Meta' }}</h2>
+
+<form [formGroup]="goalForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-error *ngIf="goalForm.get('name')?.hasError('required')">
+          Nome é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Valor da Meta</mat-label>
+        <input matInput formControlName="targetAmount" currencyMask 
+               [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" required>
+        <mat-error *ngIf="goalForm.get('targetAmount')?.hasError('required')">
+          Valor da meta é obrigatório
+        </mat-error>
+        <mat-error *ngIf="goalForm.get('targetAmount')?.hasError('min')">
+          Valor deve ser maior que zero
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Valor Atual</mat-label>
+        <input matInput formControlName="currentAmount" currencyMask 
+               [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" required>
+        <mat-error *ngIf="goalForm.get('currentAmount')?.hasError('required')">
+          Valor atual é obrigatório
+        </mat-error>
+        <mat-error *ngIf="goalForm.get('currentAmount')?.hasError('min')">
+          Valor deve ser maior ou igual a zero
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Prazo</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="deadline" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="goalForm.get('deadline')?.hasError('required')">
+          Prazo é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Descrição</mat-label>
+        <textarea matInput formControlName="description" rows="3"></textarea>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!goalForm.valid">
+      {{ data ? 'Salvar' : 'Criar' }}
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,85 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.container {
+  @include list-container;
+
+  .header {
+    @include page-header;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  .filter {
+    @include filter-field;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .mat-elevation-z8 {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .loading-shade {
+    @include loading-overlay;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  mat-table {
+    width: 100%;
+
+    .mat-cell {
+      padding: 8px 16px;
+    }
+
+    .mat-column-balance {
+      width: 150px;
+      text-align: right;
+
+      &.positive {
+        color: $success;
+      }
+
+      &.negative {
+        color: $warn;
+      }
+    }
+
+    .mat-column-bank {
+      width: 200px;
+    }
+  }
+
+  .no-data {
+    padding: $spacing-xl !important;
+
+    .no-data-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-md;
+      color: rgba(0, 0, 0, 0.54);
+
+      mat-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+      }
+    }
+  }
+
+  mat-paginator {
+    margin-top: -1px;
+  }
+}

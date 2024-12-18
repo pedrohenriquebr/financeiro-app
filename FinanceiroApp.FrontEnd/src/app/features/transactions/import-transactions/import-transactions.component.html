@@ -1,0 +1,126 @@
+<div class="import-container">
+  <div class="dialog-header">
+    <h2>Importar Transações</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-stepper #stepper (selectionChange)="onStepChange($event)" linear>
+    <!-- Step 1: File Selection -->
+    <mat-step [stepControl]="fileForm">
+      <ng-template matStepLabel>Selecionar Arquivo</ng-template>
+      <form [formGroup]="fileForm" class="step-content">
+        <div class="file-upload">
+          <input type="file" 
+                 accept=".csv" 
+                 (change)="onFileSelected($event)" 
+                 #fileInput 
+                 style="display: none">
+          
+          <button mat-raised-button 
+                  color="primary" 
+                  (click)="fileInput.click()">
+            <mat-icon>upload_file</mat-icon>
+            Selecionar Arquivo CSV
+          </button>
+          
+          <span class="file-name" *ngIf="fileForm.get('file')?.value">
+            {{fileForm.get('file')?.value.name}}
+          </span>
+        </div>
+
+        <div class="step-actions">
+          <button mat-button matStepperNext [disabled]="!fileForm.valid">
+            Próximo
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Step 2: Column Mapping -->
+    <mat-step [stepControl]="columnMappingForm">
+      <ng-template matStepLabel>Mapear Colunas</ng-template>
+      <form [formGroup]="columnMappingForm" class="step-content">
+        <div class="mapping-fields">
+          <mat-form-field appearance="outline">
+            <mat-label>Coluna de Descrição</mat-label>
+            <mat-select formControlName="descriptionColumn">
+              <mat-option *ngFor="let column of availableColumns" [value]="column">
+                {{column}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Coluna de Valor</mat-label>
+            <mat-select formControlName="amountColumn">
+              <mat-option *ngFor="let column of availableColumns" [value]="column">
+                {{column}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Coluna de Data</mat-label>
+            <mat-select formControlName="dateColumn">
+              <mat-option *ngFor="let column of availableColumns" [value]="column">
+                {{column}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="step-actions">
+          <button mat-button matStepperPrevious>Voltar</button>
+          <button mat-button matStepperNext [disabled]="!columnMappingForm.valid">Próximo</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Step 3: Bank Account Selection -->
+    <mat-step [stepControl]="accountForm">
+      <ng-template matStepLabel>Selecionar Conta</ng-template>
+      <form [formGroup]="accountForm" class="step-content">
+        <mat-form-field appearance="outline">
+          <mat-label>Conta Bancária</mat-label>
+          <mat-select formControlName="bankAccountId">
+            <mat-option *ngFor="let account of bankAccounts" [value]="account.id">
+              {{account.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="accountForm.get('bankAccountId')?.errors?.['required']">
+            Selecione uma conta bancária
+          </mat-error>
+        </mat-form-field>
+
+        <div class="step-actions">
+          <button mat-button matStepperPrevious>Voltar</button>
+          <button mat-button matStepperNext [disabled]="!accountForm.valid">Próximo</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Step 4: Review and Import -->
+    <mat-step>
+      <ng-template matStepLabel>Revisar e Importar</ng-template>
+      <div class="step-content review-step">
+        <app-import-transaction-grid
+          [transactions]="transactions"
+          (transactionEdit)="onTransactionEdit($event)"
+          (transactionDelete)="onTransactionDelete($event)"
+          (selectionChange)="onSelectionChange($event)">
+        </app-import-transaction-grid>
+
+        <div class="step-actions">
+          <button mat-button matStepperPrevious>Voltar</button>
+          <button mat-raised-button 
+                  color="primary"
+                  (click)="importTransactions()">
+            Importar Transações
+          </button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

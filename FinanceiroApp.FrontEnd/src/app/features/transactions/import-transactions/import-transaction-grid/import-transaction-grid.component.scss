@@ -1,0 +1,93 @@
+.grid-container {
+  padding: 24px;
+
+  .grid-header {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+
+    .filter-field {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .column-select {
+      min-width: 250px;
+    }
+
+    button {
+      white-space: nowrap;
+    }
+  }
+
+  .transaction-table {
+    width: 100%;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    .mat-column-select {
+      width: 64px;
+      padding: 0 12px;
+    }
+
+    .mat-column-description {
+      min-width: 200px;
+      padding: 0 12px;
+    }
+
+    .mat-column-amount {
+      min-width: 120px;
+      padding: 0 12px;
+    }
+
+    .mat-column-date {
+      min-width: 120px;
+      padding: 0 12px;
+    }
+
+    .mat-column-type {
+      min-width: 120px;
+      padding: 0 12px;
+    }
+
+    .mat-column-category {
+      min-width: 150px;
+      padding: 0 12px;
+    }
+
+    .mat-column-bankAccount {
+      min-width: 150px;
+      padding: 0 12px;
+    }
+
+    .mat-column-actions {
+      width: 120px;
+      text-align: center;
+      padding: 0 12px;
+    }
+
+    th.mat-header-cell,
+    td.mat-cell {
+      padding: 12px;
+      font-size: 14px;
+    }
+
+    th.mat-header-cell {
+      font-weight: 500;
+    }
+
+    .expense {
+      color: #f44336;
+    }
+
+    .income {
+      color: #4caf50;
+    }
+  }
+
+  .mat-paginator {
+    margin-top: 24px;
+  }
+}

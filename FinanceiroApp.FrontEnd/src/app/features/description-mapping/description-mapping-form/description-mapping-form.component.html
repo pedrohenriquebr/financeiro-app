@@ -1,0 +1,34 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2 mat-dialog-title>{{isEditing ? 'Editar' : 'Novo'}} Mapeamento</h2>
+  
+  <mat-dialog-content>
+    <div class="form-container">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Padrão</mat-label>
+        <input matInput formControlName="pattern" placeholder="Digite o padrão">
+        <mat-error *ngIf="form.get('pattern')?.hasError('required')">
+          Padrão é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="categoryId">
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{category.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('categoryId')?.hasError('required')">
+          Categoria é obrigatória
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+      {{isEditing ? 'Atualizar' : 'Criar'}}
+    </button>
+  </mat-dialog-actions>
+</form>

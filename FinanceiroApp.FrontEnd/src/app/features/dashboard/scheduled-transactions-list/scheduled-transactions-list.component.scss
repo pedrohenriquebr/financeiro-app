@@ -1,0 +1,50 @@
+.scheduled-transactions-container {
+  padding: 1rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  .error-message {
+    margin: 1rem 0;
+    text-align: center;
+  }
+
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .mat-table {
+    width: 100%;
+
+    .mat-header-cell {
+      font-weight: bold;
+    }
+
+    .mat-column-actions {
+      width: 100px;
+      justify-content: flex-end;
+    }
+
+    .mat-column-amount {
+      justify-content: flex-end;
+    }
+  }
+
+  .no-data {
+    text-align: center;
+    padding: 2rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+    margin-top: 1rem;
+  }
+}

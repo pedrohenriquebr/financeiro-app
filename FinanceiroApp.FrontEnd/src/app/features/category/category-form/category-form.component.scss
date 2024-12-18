@@ -1,0 +1,69 @@
+@import '../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.form-container {
+  @include form-container;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+  }
+
+  .loading-shade {
+    @include loading-overlay;
+  }
+
+  .button-spinner {
+    margin-left: 8px;
+  }
+
+  .form-row {
+    margin-bottom: 1rem;
+    
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .button-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+:host {
+  display: block;
+  min-width: $dialog-min-width;
+  max-width: $dialog-max-width;
+}
+
+.type-selector {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+  
+  mat-button-toggle-group {
+    margin: 0 auto;
+  }
+  
+  .expense-toggle {
+    color: $warn;
+  }
+  
+  .income-toggle {
+    color: $success;
+  }
+}
+
+mat-dialog-content {
+  min-width: 400px;
+}

@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Apoie o FinanceiroApp</h2>
+
+<div mat-dialog-content>
+  <p>Ajude a manter o FinanceiroApp gratuito e em constante evolução!</p>
+  
+  <div class="donation-options">
+    <mat-card class="donation-option">
+      <mat-card-content>
+        <mat-icon>qr_code</mat-icon>
+        <h3>PIX</h3>
+        <p>Faça uma doação via PIX</p>
+        <small>Chave PIX: [sua chave pix aqui]</small>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="donation-option">
+      <mat-card-content>
+        <mat-icon>payment</mat-icon>
+        <h3>PayPal</h3>
+        <p>Doe através do PayPal</p>
+        <a mat-raised-button color="primary" href="[seu link do paypal]" target="_blank">
+          Doar via PayPal
+        </a>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card class="other-ways">
+    <mat-card-content>
+      <h3>Outras formas de ajudar</h3>
+      <ul>
+        <li>⭐ Dê uma estrela no GitHub</li>
+        <li>🐛 Reporte bugs e problemas</li>
+        <li>💡 Sugira novas funcionalidades</li>
+        <li>🔧 Contribua com código</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Fechar</button>
+</div>

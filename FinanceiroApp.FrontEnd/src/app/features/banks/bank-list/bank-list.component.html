@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="header">
+    <h2>Bancos</h2>
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="openBankDialog()">
+        <mat-icon>add</mat-icon>
+        Novo Banco
+      </button>
+    </div>
+  </div>
+
+  <app-data-table
+    [data]="banks"
+    [columns]="columns"
+    [actions]="actions"
+    [loading]="isLoading"
+    [showQueryBuilder]="showQueryBuilder"
+    [queryConfig]="queryConfig"
+    [queryGroup]="queryGroup"
+    (actionClick)="onActionClick($event)"
+    (queryChange)="onQueryChange($event)"
+    (selectionChange)="onSelectionChange($event)">
+  </app-data-table>
+</div>

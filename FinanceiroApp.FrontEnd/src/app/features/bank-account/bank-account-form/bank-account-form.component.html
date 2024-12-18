@@ -1,0 +1,76 @@
+<h2 mat-dialog-title>{{ isEditing ? 'Editar' : 'Nova' }} Conta Bancária</h2>
+
+<form [formGroup]="bankAccountForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Carregando bancos...</p>
+    </div>
+
+    <div *ngIf="!isLoading">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome da Conta</mat-label>
+        <input matInput formControlName="name" required placeholder="Ex: Conta Corrente">
+        <mat-error *ngIf="bankAccountForm.get('name')?.errors?.['required']">
+          Nome é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Banco</mat-label>
+        <mat-select formControlName="bankId" required>
+          <mat-option *ngFor="let bank of banks" [value]="bank.id">
+            {{ bank.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="bankAccountForm.get('bankId')?.errors?.['required']">
+          Banco é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Agência</mat-label>
+          <input matInput formControlName="agency" required placeholder="0000-0" 
+                 (input)="formatAgency($event)" maxlength="6">
+          <mat-error *ngIf="bankAccountForm.get('agency')?.errors?.['required']">
+            Agência é obrigatória
+          </mat-error>
+          <mat-error *ngIf="bankAccountForm.get('agency')?.errors?.['pattern']">
+            Formato inválido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Número da Conta</mat-label>
+          <input matInput formControlName="accountNumber" required placeholder="00000-0"
+                 (input)="formatAccountNumber($event)" maxlength="7">
+          <mat-error *ngIf="bankAccountForm.get('accountNumber')?.errors?.['required']">
+            Número da conta é obrigatório
+          </mat-error>
+          <mat-error *ngIf="bankAccountForm.get('accountNumber')?.errors?.['pattern']">
+            Formato inválido
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Saldo Inicial</mat-label>
+        <input matInput type="number" step="0.01" formControlName="balance" required>
+        <span matPrefix>R$ &nbsp;</span>
+        <mat-error *ngIf="bankAccountForm.get('balance')?.errors?.['required']">
+          Saldo inicial é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close [disabled]="isSubmitting">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" 
+            [disabled]="!bankAccountForm.valid || isSubmitting || isLoading">
+      <mat-spinner diameter="20" *ngIf="isSubmitting" class="button-spinner"></mat-spinner>
+      <span>{{ isSubmitting ? 'Salvando...' : 'Salvar' }}</span>
+    </button>
+  </mat-dialog-actions>
+</form>

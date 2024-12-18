@@ -1,0 +1,55 @@
+.container {
+  padding: 20px;
+}
+
+.goals-card {
+  width: 100%;
+  
+  .mat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    .mat-card-title {
+      margin: 0;
+    }
+    
+    .add-button {
+      margin-right: 16px;
+    }
+  }
+}
+
+.goals-table {
+  width: 100%;
+
+  .mat-column-actions {
+    width: 100px;
+    text-align: center;
+  }
+
+  .progress-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 16px;
+
+    .mat-progress-bar {
+      flex: 1;
+    }
+
+    .progress-text {
+      min-width: 45px;
+      text-align: right;
+    }
+  }
+}
+
+.mat-column-name {
+  padding-left: 16px;
+}
+
+.mat-column-progress {
+  min-width: 150px;
+}

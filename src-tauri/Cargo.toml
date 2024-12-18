@@ -1,0 +1,28 @@
+[package]
+name = "financeiro-app"
+version = "1.0.0"
+description = "Aplicativo de Controle Financeiro"
+authors = ["Pedro Henrique"]
+license = ""
+repository = ""
+edition = "2021"
+rust-version = "1.57"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.5", features = [ "fs-write-file", "fs-read-dir", "window-all", "fs-read-file", "fs-exists", "http-all", "shell-execute", "process-relaunch", "process-exit", "notification-all", "shell-open", "shell-sidecar", "system-tray"] }
+
+[features]
+default = [ "custom-protocol" ]
+custom-protocol = [ "tauri/custom-protocol" ]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+incremental = false
+opt-level = "s"

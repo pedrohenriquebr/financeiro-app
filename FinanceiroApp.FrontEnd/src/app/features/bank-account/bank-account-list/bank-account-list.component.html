@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="header">
+    <h2>Contas Bancárias</h2>
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="openAccountDialog()">
+        <mat-icon>add</mat-icon>
+        Nova Conta
+      </button>
+    </div>
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [data]="accounts"
+    [showSelection]="true"
+    [actions]="actions"
+    [loading]="isLoading"
+    [queryConfig]="queryConfig"
+    [queryGroup]="queryGroup"
+    [showQueryBuilder]="showQueryBuilder"
+    (queryChange)="onQueryChange($event)"
+    (selectionChange)="onSelectionChange($event)"
+    (actionClick)="onActionClick($event)">
+  </app-data-table>
+</div>
