@@ -30,7 +30,7 @@ jobs:
       - name: Validate Commit Message
         uses: gsactions/commit-message-checker@v2
         with:
-          pattern: '^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?: .+$'
+          pattern: '^(feat|fix|docs|style|refactor|test|chore|ci)(\(.+\))?: .+$'
           error: 'Commit message must follow conventional commits format'
           checkAllCommitMessages: true
           accessToken: ${{ secrets.GITHUB_TOKEN }}
