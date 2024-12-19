@@ -120,7 +120,7 @@ jobs:
       run: dotnet restore
       
     - name: Build Backend
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet publish Financeiro.API/Financeiro.API.csproj -c Release
 
     - name: Test Backend
       run: dotnet test --no-build --verbosity normal
