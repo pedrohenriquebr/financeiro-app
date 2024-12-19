@@ -1,0 +1,137 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Permite executar manualmente
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  NODE_VERSION: '18'
+  PNPM_VERSION: '8.12.0'
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: windows-latest
+    timeout-minutes: 30  # Previne builds infinitos
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Necessário para versionamento
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'  # Habilita cache do npm
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: ${{ env.PNPM_VERSION }}
+        run_install: false
+
+    - name: Get pnpm store directory
+      shell: bash
+      run: |
+        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+    - name: Setup pnpm cache
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Cache .NET packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Cache Rust dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-
+
+    - name: Install Frontend Dependencies
+      run: |
+        pnpm install
+      working-directory: FinanceiroApp.FrontEnd
+
+    - name: Lint Frontend
+      run: |
+        pnpm lint
+      working-directory: FinanceiroApp.FrontEnd
+      continue-on-error: true  # Não falha o build, mas reporta problemas
+
+    - name: Build Frontend
+      run: |
+        pnpm build
+      working-directory: FinanceiroApp.FrontEnd
+
+    - name: Test Frontend
+      run: |
+        pnpm test -- --watch=false --browsers=ChromeHeadless
+      working-directory: FinanceiroApp.FrontEnd
+
+    - name: Restore Backend Dependencies
+      run: dotnet restore
+      
+    - name: Build Backend
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Test Backend
+      run: dotnet test --no-build --verbosity normal
+
+    - name: Build Tauri App
+      run: pnpm tauri build
+      working-directory: FinanceiroApp.FrontEnd
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v3
+      if: success()
+      with:
+        name: financeiro-app-builds
+        path: |
+          FinanceiroApp.FrontEnd/src-tauri/target/release/bundle/
+          FinanceiroApp.API/bin/Release/
+        retention-days: 7
+
+    - name: Report Status
+      if: always()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { job, conclusion } = context;
+          const status = conclusion === 'success' ? '✅' : '❌';
+          const message = `${status} Build ${conclusion}: ${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: message
+          })
+      if: github.event_name == 'pull_request'

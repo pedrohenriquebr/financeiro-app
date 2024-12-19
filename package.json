@@ -1,7 +1,18 @@
 {
   "name": "financeiro-app",
   "version": "1.0.0",
-  "description": "Aplicativo de Controle Financeiro",
+  "description": "Aplicativo de Controle Financeiro com Angular, .NET e Tauri",
+  "author": {
+    "name": "Pedro Henrique",
+    "email": "[seu-email]",
+    "url": "[seu-site]"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seu-usuario/FinanceiroApp"
+  },
   "scripts": {
     "build-api": "dotnet publish Financeiro.API/Financeiro.API.csproj -c Release",
     "generate-icons": "node scripts/generate-icons.js",
