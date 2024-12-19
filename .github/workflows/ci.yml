@@ -123,7 +123,7 @@ jobs:
       run: dotnet publish Financeiro.API/Financeiro.API.csproj -c Release
 
     - name: Test Backend
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test  --verbosity normal
 
     - name: Build Tauri App
       if: github.event_name != 'pull_request'
