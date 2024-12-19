@@ -51,7 +51,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
 
     - name: Setup pnpm
       uses: pnpm/action-setup@v2
@@ -60,17 +59,22 @@ jobs:
         run_install: false
 
     - name: Get pnpm store directory
+      id: pnpm-cache
       shell: bash
       run: |
-        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
     - name: Setup pnpm cache
       uses: actions/cache@v3
       with:
-        path: ${{ env.STORE_PATH }}
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
+
+    - name: Install Frontend Dependencies
+      run: pnpm install --frozen-lockfile
+      working-directory: FinanceiroApp.FrontEnd
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -98,10 +102,6 @@ jobs:
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
         restore-keys: |
           ${{ runner.os }}-cargo-
-
-    - name: Install Frontend Dependencies
-      run: pnpm install
-      working-directory: FinanceiroApp.FrontEnd
 
     - name: Lint Frontend
       run: pnpm lint
