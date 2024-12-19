@@ -1,30 +1,42 @@
 # Contribuindo para o FinanceiroApp
 
-Primeiramente, obrigado por considerar contribuir para o FinanceiroApp! 🎉
+Obrigado por considerar contribuir com o FinanceiroApp! Este documento fornece diretrizes e instruções para contribuir com o projeto.
 
-## Como Contribuir
+## 🌳 Git Flow
 
-1. Fork o projeto
-2. Clone seu fork: `git clone https://github.com/seu-usuario/FinanceiroApp.git`
-3. Crie uma branch para sua feature: `git checkout -b feature/nome-da-feature`
-4. Faça suas alterações
-5. Execute os testes: `pnpm test`
-6. Commit suas alterações: `git commit -m 'feat: adiciona nova feature'`
-7. Push para a branch: `git push origin feature/nome-da-feature`
-8. Abra um Pull Request
+Seguimos um fluxo de trabalho baseado em branches para manter o desenvolvimento organizado:
 
-## Padrões de Código
+### Branches Principais
+- `master`: Código em produção
+- `develop`: Branch principal de desenvolvimento
 
-- Use TypeScript para código frontend
-- Siga o estilo Angular
-- Mantenha a documentação atualizada
-- Adicione testes para novas features
+### Branches de Feature
+1. Crie sua branch a partir de `develop`:
+   ```bash
+   git checkout develop
+   git pull origin develop
+   git checkout -b feature/sua-feature
+   ```
 
-## Commits
+2. Desenvolva sua feature seguindo nossas convenções de código
 
-Seguimos o padrão Conventional Commits:
+3. Commit suas mudanças:
+   ```bash
+   git commit -m "feat(escopo): descrição da mudança"
+   ```
 
-- `feat`: Nova feature
+4. Push para o repositório:
+   ```bash
+   git push origin feature/sua-feature
+   ```
+
+5. Abra um Pull Request para `develop`
+
+### Convenções de Commit
+
+Usamos [Conventional Commits](https://www.conventionalcommits.org/):
+
+- `feat`: Nova funcionalidade
 - `fix`: Correção de bug
 - `docs`: Documentação
 - `style`: Formatação
@@ -32,10 +44,70 @@ Seguimos o padrão Conventional Commits:
 - `test`: Testes
 - `chore`: Manutenção
 
-## Setup do Ambiente
+Exemplo:
+```bash
+feat(auth): adiciona login com Google
+fix(dashboard): corrige cálculo de saldo
+docs(readme): atualiza instruções de instalação
+```
 
-Veja o README.md para instruções detalhadas de setup.
+## 🚀 Processo de Desenvolvimento
 
-## Dúvidas?
+1. **Antes de Começar**
+   - Verifique se há uma issue relacionada
+   - Discuta grandes mudanças na issue primeiro
 
-Abra uma issue ou entre em contato!
+2. **Desenvolvimento**
+   - Siga os padrões de código
+   - Adicione testes quando relevante
+   - Mantenha a documentação atualizada
+
+3. **Pull Request**
+   - Descreva claramente as mudanças
+   - Referencie issues relacionadas
+   - Aguarde review e CI passar
+
+## 🧪 Testes
+
+- Execute testes antes de submeter PR:
+  ```bash
+  # Backend
+  dotnet test
+
+  # Frontend
+  cd FinanceiroApp.FrontEnd
+  pnpm test
+  ```
+
+## 📝 Documentação
+
+- Atualize a documentação afetada
+- Mantenha o README.md atualizado
+- Documente novas features
+
+## 🔍 Review
+
+Seu PR será revisado para:
+- Qualidade do código
+- Cobertura de testes
+- Documentação
+- Convenções de commit
+- CI/CD passar
+
+## 📜 Licença
+
+Ao contribuir, você concorda que suas contribuições serão licenciadas sob a mesma licença do projeto.
+
+## 🤝 Código de Conduta
+
+- Seja respeitoso
+- Aceite feedback construtivo
+- Foque na qualidade
+- Ajude outros contribuidores
+
+## ❓ Dúvidas
+
+Para dúvidas ou discussões:
+- Abra uma issue
+- Comente em PRs existentes
+- Entre em contato: pedrohenriquebraga735@gmail.com

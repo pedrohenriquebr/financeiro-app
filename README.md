@@ -163,9 +163,35 @@ FinanceiroApp/
     └── target/               # Build outputs
 ```
 
-## 🤝 Contribuindo
+## 👥 Contribuindo
 
-Veja [CONTRIBUTING.md](CONTRIBUTING.md) para detalhes sobre como contribuir.
+Adoraríamos sua ajuda para melhorar o FinanceiroApp! 
+
+### Git Flow
+
+Usamos um fluxo de trabalho baseado em branches:
+- `master`: Branch de produção
+- `develop`: Branch de desenvolvimento
+- `feature/*`: Novas funcionalidades
+- `release/*`: Preparação de releases
+- `hotfix/*`: Correções urgentes
+
+Para contribuir:
+1. Fork o repositório
+2. Crie uma branch a partir de `develop`
+3. Faça suas alterações
+4. Abra um Pull Request
+
+Veja [CONTRIBUTING.md](CONTRIBUTING.md) para instruções detalhadas.
+
+### Convenções de Commit
+
+Seguimos [Conventional Commits](https://www.conventionalcommits.org/):
+```bash
+feat(auth): adiciona login com Google
+fix(dashboard): corrige cálculo de saldo
+docs(readme): atualiza instruções
+```
 
 ## 📝 Licença
 
