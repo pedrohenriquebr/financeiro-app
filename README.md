@@ -1,5 +1,5 @@
 # FinanceiroApp
-
+[![CI/CD Pipeline](https://github.com/pedrohenriquebr/financeiro-app/actions/workflows/ci.yml/badge.svg)](https://github.com/pedrohenriquebr/financeiro-app/actions/workflows/ci.yml)
 ![Angular](https://img.shields.io/badge/Angular-17.0.0-red)
 ![.NET](https://img.shields.io/badge/.NET-8.0-purple)
 ![Tauri](https://img.shields.io/badge/Tauri-1.6.3-blue)
