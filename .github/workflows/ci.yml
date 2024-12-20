@@ -14,6 +14,12 @@ on:
       - develop
   workflow_dispatch:
 
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
+
 env:
   DOTNET_VERSION: '8.0.x'
   NODE_VERSION: '18'
@@ -170,6 +176,8 @@ jobs:
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
             msi/*.msi
@@ -178,8 +186,8 @@ jobs:
             ## FinanceiroApp Release ${{ github.ref_name }}
             
             ### Instaladores
-            - MSI Installer (Recomendado para instalação silenciosa/empresarial)
-            - Setup EXE (Instalador tradicional com interface)
+            - 💿 MSI Installer (Recomendado para instalação silenciosa/empresarial)
+            - 🚀 Setup EXE (Instalador tradicional com interface)
             
             ### Notas da Versão
             Para ver as mudanças completas, consulte o [CHANGELOG.md](./CHANGELOG.md)
@@ -193,6 +201,7 @@ jobs:
             - Windows 10 ou superior (64-bit)
             - 4GB RAM (mínimo)
             - 500MB de espaço em disco
+          draft: false
           prerelease: ${{ contains(github.ref, '-alpha') || contains(github.ref, '-beta') || contains(github.ref, '-rc') }}
 
   notify:
