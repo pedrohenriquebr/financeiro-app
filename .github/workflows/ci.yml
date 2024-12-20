@@ -72,6 +72,15 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
 
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+
     - name: Install Rust
       uses: dtolnay/rust-toolchain@stable
 
@@ -112,10 +121,13 @@ jobs:
       run: dotnet restore
       
     - name: Build Backend
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet publish Financeiro.API/Financeiro.API.csproj -c Release
 
     - name: Test Backend
       run: dotnet test --no-restore --verbosity normal
+
+    - name: Install Tauri Dependencies
+      run: pnpm install --frozen-lockfile
 
     - name: Build Tauri App
       if: github.event_name != 'pull_request'
