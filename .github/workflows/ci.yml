@@ -125,10 +125,12 @@ jobs:
     - name: Test Backend
       run: dotnet test  --verbosity normal
 
+    - name: Install Tauri Dependencies
+      run: pnpm install --frozen-lockfile
+
     - name: Build Tauri App
       if: github.event_name != 'pull_request'
       run: pnpm tauri build
-      working-directory: FinanceiroApp.FrontEnd
 
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v3
