@@ -72,23 +72,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
 
-    - name: Install Frontend Dependencies
-      run: pnpm install --frozen-lockfile
-      working-directory: FinanceiroApp.FrontEnd
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
-
-    - name: Cache .NET packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
-
     - name: Install Rust
       uses: dtolnay/rust-toolchain@stable
 
@@ -98,15 +81,24 @@ jobs:
         path: |
           ~/.cargo/registry
           ~/.cargo/git
-          target
+          src-tauri/target
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
         restore-keys: |
           ${{ runner.os }}-cargo-
 
-    - name: Lint Frontend
-      run: pnpm lint
+    - name: Cache Tauri dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          C:\Users\runneradmin\.cache\tauri
+          src-tauri\.cache
+        key: ${{ runner.os }}-tauri-${{ hashFiles('src-tauri/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-tauri-
+
+    - name: Install Frontend Dependencies
+      run: pnpm install --frozen-lockfile
       working-directory: FinanceiroApp.FrontEnd
-      continue-on-error: true
 
     - name: Build Frontend
       run: pnpm build
@@ -120,26 +112,29 @@ jobs:
       run: dotnet restore
       
     - name: Build Backend
-      run: dotnet publish Financeiro.API/Financeiro.API.csproj -c Release
+      run: dotnet build --no-restore --configuration Release
 
     - name: Test Backend
-      run: dotnet test  --verbosity normal
-
-    - name: Install Tauri Dependencies
-      run: pnpm install --frozen-lockfile
+      run: dotnet test --no-restore --verbosity normal
 
     - name: Build Tauri App
       if: github.event_name != 'pull_request'
       run: pnpm tauri build
 
-    - name: Upload Build Artifacts
+    - name: Upload MSI Installer
       uses: actions/upload-artifact@v3
-      if: success() && github.event_name != 'pull_request'
+      if: github.event_name != 'pull_request'
       with:
-        name: financeiro-app-builds
-        path: |
-          FinanceiroApp.FrontEnd/src-tauri/target/release/bundle/
-          FinanceiroApp.API/bin/Release/
+        name: financeiro-app-msi
+        path: src-tauri/target/release/bundle/msi/*.msi
+        retention-days: 7
+
+    - name: Upload NSIS Installer
+      uses: actions/upload-artifact@v3
+      if: github.event_name != 'pull_request'
+      with:
+        name: financeiro-app-setup
+        path: src-tauri/target/release/bundle/nsis/*.exe
         retention-days: 7
 
   release:
@@ -149,29 +144,44 @@ jobs:
     runs-on: windows-latest
     
     steps:
-      - name: Download Artifacts
+      - name: Download MSI Artifact
         uses: actions/download-artifact@v3
         with:
-          name: financeiro-app-builds
-          path: builds
+          name: financeiro-app-msi
+          path: msi
 
-      - name: Generate Changelog
-        id: changelog
-        uses: mikepenz/release-changelog-builder-action@v4
+      - name: Download NSIS Artifact
+        uses: actions/download-artifact@v3
         with:
-          configuration: ".github/changelog-config.json"
-          commitMode: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: financeiro-app-setup
+          path: setup
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: builds/**
-          body: ${{steps.changelog.outputs.changelog}}
-          draft: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            msi/*.msi
+            setup/*.exe
+          body: |
+            ## FinanceiroApp Release ${{ github.ref_name }}
+            
+            ### Instaladores
+            - MSI Installer (Recomendado para instalação silenciosa/empresarial)
+            - Setup EXE (Instalador tradicional com interface)
+            
+            ### Notas da Versão
+            Para ver as mudanças completas, consulte o [CHANGELOG.md](./CHANGELOG.md)
+            
+            ### Instruções de Instalação
+            1. Baixe o instalador de sua preferência (MSI ou EXE)
+            2. Execute o instalador como administrador
+            3. Siga as instruções na tela
+            
+            ### Requisitos do Sistema
+            - Windows 10 ou superior (64-bit)
+            - 4GB RAM (mínimo)
+            - 500MB de espaço em disco
+          prerelease: ${{ contains(github.ref, '-alpha') || contains(github.ref, '-beta') || contains(github.ref, '-rc') }}
 
   notify:
     name: Notify Status
