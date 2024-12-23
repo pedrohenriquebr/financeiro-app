@@ -18,6 +18,12 @@ const routes: Routes = [
     loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'dashboard-test',
+    //import my standalone component
+    loadComponent: () => import('./features/spreadsheet/spreadsheet.component').then(m => m.SpreadsheetComponent),
+    canActivate: [AuthGuard]
+  },
   { path: 'categories', component: CategoryListComponent, canActivate: [AuthGuard] },
   { path: 'categories/new', component: CategoryFormComponent, canActivate: [AuthGuard] },
   { path: 'categories/edit/:id', component: CategoryFormComponent, canActivate: [AuthGuard] },

@@ -44,6 +44,9 @@ dependencies:
   d3:
     specifier: ^7.9.0
     version: 7.9.0
+  jquery:
+    specifier: ^3.7.1
+    version: 3.7.1
   ng2-charts:
     specifier: ^5.0.4
     version: 5.0.4(@angular/cdk@17.3.10)(@angular/common@17.3.12)(@angular/core@17.3.12)(@angular/platform-browser@17.3.12)(chart.js@4.4.7)(rxjs@7.8.1)
@@ -5863,6 +5866,10 @@ packages:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
     hasBin: true
     dev: true
+
+  /jquery@3.7.1:
+    resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
+    dev: false
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
