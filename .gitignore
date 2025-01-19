@@ -116,3 +116,4 @@ wwwroot/
 appsettings.Development.json
 credentials.json
 environment.development.ts
+.aider*

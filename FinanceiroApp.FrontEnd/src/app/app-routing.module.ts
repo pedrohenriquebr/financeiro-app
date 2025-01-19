@@ -20,8 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard-test',
-    //import my standalone component
-    loadComponent: () => import('./features/spreadsheet/spreadsheet.component').then(m => m.SpreadsheetComponent),
+    loadChildren: () => import('./features/spreadsheet/spreadsheet.module').then(m => m.SpreadsheetModule),
     canActivate: [AuthGuard]
   },
   { path: 'categories', component: CategoryListComponent, canActivate: [AuthGuard] },

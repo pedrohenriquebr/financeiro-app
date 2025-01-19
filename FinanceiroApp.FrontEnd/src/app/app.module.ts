@@ -17,28 +17,34 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
   ],
   imports: [
+    // Angular Core Modules
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+
+    // Angular Material Modules
+    MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatButtonModule,
-    MatProgressBarModule,
     MatListModule,
+    MatProgressBarModule,
     MatProgressSpinnerModule,
+
+    // Feature Modules
     SharedModule,
     CategoryModule,
     BankAccountModule,
     TransactionModule,
     DescriptionMappingModule,
-    AppRoutingModule,
+
+    // Routing Module
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
